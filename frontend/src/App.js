@@ -1,23 +1,73 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import IssueList from './components/IssueList';
+import IssueFilter from './components/IssueFilter';
+import IssueForm from './components/IssueForm';
+import IssueEdit from './components/IssueEdit';
+import IssueAdd from './components/IssueAdd';
 
 function App() {
+  const [issues, setIssues] = useState([]);
+  const [selectedIssue, setSelectedIssue] = useState(null);
+  const [filterParams, setFilterParams] = useState({});
+
+  useEffect(() => {
+    fetchIssues();
+  }, []);
+
+  const fetchIssues = async () => {
+    try {
+      const res = await axios.get('/api/issues/', {
+        params: filterParams
+      });
+      setIssues(res.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleFilter = (params) => {
+    setFilterParams(params);
+  };
+
+  const handleIssueSelect = (issue) => {
+    setSelectedIssue(issue);
+  };
+
+  const handleIssueEdit = async (issue) => {
+    try {
+      await axios.put(`/api/issues/${issue.id}/`, issue);
+      fetchIssues();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleIssueAdd = async (issue) => {
+    try {
+      await axios.post('/api/issues/', issue);
+      fetchIssues();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleIssueDelete = async (issue) => {
+    try {
+      await axios.delete(`/api/issues/${issue.id}/`);
+      fetchIssues();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <h1>Issue Tracker</h1>
+      <IssueFilter onFilter={handleFilter} />
+      <IssueList issues={issues} onIssueSelect={handleIssueSelect} onIssueDelete={handleIssueDelete} />
+      {selectedIssue ? <IssueEdit issue={selectedIssue} onIssueEdit={handleIssueEdit} /> : null}
+      <IssueForm onIssueAdd={handleIssueAdd} />
     </div>
   );
 }

@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const IssueEdit = (props) => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     title: '',
     owner: '',
@@ -32,7 +32,7 @@ const IssueEdit = (props) => {
     e.preventDefault();
     axios.put(`http://localhost:8000/api/issues/${id}/`, formData)
       .then(res => {
-        history.push('/');
+        navigate('/');
       })
       .catch(err => {
         console.log(err);

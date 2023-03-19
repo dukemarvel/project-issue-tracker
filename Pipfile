@@ -4,6 +4,9 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
+django-cors-headers = "*"
+pymongo = "==3.12.3"
+sqlparse = "*"
 
 [dev-packages]
 
