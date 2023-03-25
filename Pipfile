@@ -5,8 +5,10 @@ name = "pypi"
 
 [packages]
 django-cors-headers = "*"
-pymongo = "==3.12.3"
 sqlparse = "*"
+mongoengine = "*"
+django-rest-framework-mongoengine = "*"
+pymongo = {extras = ["srv"], version = "*"}
 
 [dev-packages]
 

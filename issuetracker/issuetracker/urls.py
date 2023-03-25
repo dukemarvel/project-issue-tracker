@@ -16,12 +16,16 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
-from issuetrackerapp import api
+from rest_framework_mongoengine import routers
+#from issuetrackerapp import api
+from issuetrackerapp.views import IssueListCreateView, IssueRetrieveUpdateDestroyView
 
-router = routers.DefaultRouter()
-router.register(r'issues', api.IssueViewSet, 'issue')
+#router = routers.DefaultRouter()
+#router.register(r'issues', api.IssueViewSet, 'issue')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include(router.urls)),
+    path('api/issues/', IssueListCreateView.as_view(), name='issue-list-create'),
+    path('api/issues/<str:pk>/', IssueRetrieveUpdateDestroyView.as_view(), name='issue-detail'),
+    #path('api/', include(router.urls)),
 ]

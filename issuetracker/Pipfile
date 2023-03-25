@@ -5,8 +5,8 @@ name = "pypi"
 
 [packages]
 django = "*"
-djongo = "*"
 djangorestframework = "*"
+dnspython = "*"
 
 [dev-packages]
 

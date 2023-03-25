@@ -5,7 +5,7 @@ function IssueList() {
   const [issues, setIssues] = useState([]);
 
   useEffect(() => {
-    axios.get('/api/issues/')
+    axios.get('http://localhost:8000/api/issues/')
       .then(response => {
         setIssues(response.data);
       })

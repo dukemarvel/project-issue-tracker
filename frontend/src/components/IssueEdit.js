@@ -30,7 +30,7 @@ const IssueEdit = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.put(`http://localhost:8000/api/issues/${id}/`, formData)
+    axios.put('/api/issues/${id}/', formData)
       .then(res => {
         navigate('/');
       })
